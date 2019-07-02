@@ -14,4 +14,19 @@ class CellTest < Minitest::Test
 
     assert_instance_of Cell, @cell
   end
+
+  def test_to_show_coordinate
+
+    assert_equal "B4", @cell.coordinate
+  end
+
+  def test_to_show_ship_value_is_nil
+
+    assert_nil @cell.ship
+  end
+
+  def test_to_show_cell_is_empty
+
+    assert_equal true, @cell.empty?
+  end
 end
