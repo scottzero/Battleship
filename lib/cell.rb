@@ -12,10 +12,16 @@ class Cell
   end
 
   def empty?
-    if @ship.nil?
-      return true
-    else
-      return false
-    end
+    @ship.nil?
   end
+
+  # def fired_upon?
+  #   fire_upon?
+  # end
+  #
+  # def fire_upon
+  #   @ship.hit
+  # end
+
+
 end
