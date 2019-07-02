@@ -5,6 +5,8 @@ class Cell
     @coordinate = coordinate
     @empty = true
     @ship = ship
+    @fired_upon = false
+
   end
 
   def place_ship(cruiser_or_sub)
@@ -15,13 +17,17 @@ class Cell
     @ship.nil?
   end
 
-  # def fired_upon?
-  #   fire_upon?
-  # end
-  #
-  # def fire_upon
-  #   @ship.hit
-  # end
+  def fired_upon?
+    if @ship.health < 3
+      return true
+    else
+      return false
+    end
+  end
+
+  def fire_upon
+    @ship.hit
+  end
 
 
 end
