@@ -2,29 +2,17 @@ class Ship
   attr_reader :name, :health, :length
   def initialize(name, health)
     @name = name
-    @dmg_count = 3
-    @health = @dmg_count
+    @health = 3
     @length = @health
-
   end
 
   def sunk?
-    false
+    @health === 0 #evaluates to true if 0
   end
 
-def hit  #tweak hit algo to rotate
-  @ship_1 = Ship.new("Cruiser", @dmg_count )
-  @dmg_count -= 3  #need a space between the - 1 when doing this.
-  @ship_1.health
-#   case yogurt
-#     when 3
-#       case ship_1.health - 1
-#     when
-#       case @dmg_store << yogurt
-#     else
-#       case @dmg_store << yogurt
-#     end #end_case
-#     @dmg_store[0]
-end
+  def hit
+    @health -= 1  #need a space between the - 1 when doing this.
+    #@health
+  end
 
-  end #end class
+end #end class
