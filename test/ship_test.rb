@@ -28,18 +28,18 @@ class ShipTest < Minitest::Test
 
   def test_if_ship_is_sunk
     refute @ship_1.sunk? #is ship sunk?
-    @ship_1.hit
-    assert_equal 2, @ship_1.health
   end
 
-  # def test_when_ship_is_hit_once
-  #
-  #   assert @ship_1
-  #   assert_equal 2, @ship_1.hit
-  # end
+  def test_ships_hit_sequence
+    @ship_1.hit
+    assert_equal 2, @ship_1.health
+    refute @ship_1.sunk?
+    @ship_1.hit
+    assert_equal 1, @ship_1.health
+    refute @ship_1.sunk?
+    @ship_1.hit
+    assert_equal 0, @ship_1.health
+    assert_equal true, @ship_1.sunk?
+  end
 
-  # def test_when_ship_is_hit_twice
-  #   assert_equal 2, @ship_1.health
-  # end
-
-end #end test class
+end #end_test
