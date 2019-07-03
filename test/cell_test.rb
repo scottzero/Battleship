@@ -85,4 +85,11 @@ class CellTest < Minitest::Test
     @cell_2.place_ship(@ship_1)
     assert_equal ".", @cell_2.render
   end
+
+  def test_that_user_can_see_ship
+    @cell_1.fire_upon
+    @cell_2.place_ship(@ship_1)
+
+    assert_equal "S", @cell_2.render(@cell.empty? = false)
+  end
 end
