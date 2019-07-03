@@ -85,4 +85,47 @@ class CellTest < Minitest::Test
     @cell_2.place_ship(@ship_1)
     assert_equal ".", @cell_2.render
   end
+
+  def test_that_user_can_see_ship
+    @cell_1.fire_upon
+    @cell_2.place_ship(@ship_1)
+
+    assert_equal "S", @cell_2.render(true)
+  end
+
+  def test_that_cell_has_ship_and_was_fired_upon
+    @cell_1.fire_upon
+    @cell_2.place_ship(@ship_1)
+    @cell_2.fire_upon
+
+    assert_equal "H", @cell_2.render
+  end
+
+  def test_that_cruiser_it_hit_but_not_sunk
+      @cell_1.fire_upon
+      @cell_2.place_ship(@ship_1)
+      @cell_2.fire_upon
+
+      assert_equal false, @ship_1.sunk?
+  end
+
+  def test_that_ship_has_sunk
+    @cell_1.fire_upon
+    @cell_2.place_ship(@ship_1)
+    @cell_2.fire_upon
+    @ship_1.hit
+    @ship_1.hit
+
+    assert_equal true, @ship_1.sunk?
+  end
+
+  def test_that_cell_has_a_ship_that_has_sunk
+    @cell_1.fire_upon
+    @cell_2.place_ship(@ship_1)
+    @cell_2.fire_upon
+    @ship_1.hit
+    @ship_1.hit
+
+    assert_equal "X", @cell_2.render
+  end
 end
