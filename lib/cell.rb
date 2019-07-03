@@ -31,16 +31,22 @@ class Cell
      return @ship.hit
     end
   end
+end
 
-  def render
-    # if @ship.health === 0
-    #   return "X"
-    # if @ship.health < 3 && @ship.nil? == false
-    #   return "H"
-    if empty? && @fired_upon == true
+  def render(ship_in_cell = false)
+
+    if @fired_upon == true && @ship.nil? == false && @ship.health == 0
+      return "X"
+    elsif @fired_upon == true && @ship.nil? == false && @ship.health > 0
+      return "H"
+    elsif ship_in_cell == true
+      return "S"
+    elsif empty? && @fired_upon == true
       return "M"
     else empty? && @fired_upon == false
       return "."
-    end
+
+
     end
   end
+end
