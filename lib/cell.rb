@@ -28,16 +28,20 @@ class Cell
   def fire_upon
     @fired_upon = true
     if empty? == false
-      return
-    @ship.hit
+     return @ship.hit
+    end
   end
 end
 
   def render
-    if empty? && fired_upon = true
-    return "."
-  # else empty? == true && fired_upon = false 
-  #   return "M"
+    # if @ship.health === 0
+    #   return "X"
+    # if @ship.health < 3 && @ship.nil? == false
+    #   return "H"
+    if empty? && @fired_upon == true
+      return "M"
+    else empty? && @fired_upon == false
+      return "."
+    end
     end
   end
-end

@@ -7,6 +7,9 @@ require 'pry'
 class CellTest < Minitest::Test
   def setup
     @cell = Cell.new("B4")
+    @cell_1 = Cell.new("B4")
+    @cell_2 = Cell.new("B5")
+    @cell_3 = Cell.new("B6")
     @ship_1 = Ship.new("Cruiser",3)
   end
 
@@ -60,12 +63,26 @@ class CellTest < Minitest::Test
     assert @cell.fired_upon?
   end
 
-  def test_cell_not_been_fired_upon
-    assert_equal ".", @cell.render
+  def test_render_for_cell_that_has_not_been_fired_upon
+    assert_equal ".", @cell_1.render
   end
 
-  # def test_if_render_returns_a_miss
-  #   assert_equal "M", @cell.render
-  # end
+  def test_that_cell_was_hit_but_had_no_ship_to_result_in_miss
+    @cell_1.fire_upon
+    assert_equal "M", @cell_1.render
+  end
 
+  def test_that_cell_2_has_ship_but_not_fired_on_yet
+
+    @cell_1.fire_upon
+    @cell_2.place_ship(@ship_1)
+    assert_equal ".", @cell_2.render
+  end
+
+  def test_that_cell_2_has_ship_and_is_hit
+
+    @cell_1.fire_upon
+    @cell_2.place_ship(@ship_1)
+    assert_equal ".", @cell_2.render
+  end
 end
