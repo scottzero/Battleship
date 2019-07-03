@@ -33,15 +33,15 @@ class Cell
   end
 
   def render(ship_in_cell = false)
-    if empty? && @fired_upon == true
-      return "M"
-    elsif empty? && @fired_upon == false
-      return "."
-    else ship_in_cell == !empty?
+    if @fired_upon == true && @ship.nil? == false && @ship.health > 0
+      return "H"
+    elsif ship_in_cell == true
       return "S"
-      # return "X"
-    # if @ship.health < 3 && @ship.nil? == false
-    #   return "H"
+    elsif empty? && @fired_upon == true
+      return "M"
+    else empty? && @fired_upon == false
+      return "."
+
 
     end
   end
