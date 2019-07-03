@@ -34,10 +34,10 @@ class Cell
 end
 
   def render
-    # if @ship.health === 0
-    #   return "X"
-    # if @ship.health < 3 && @ship.nil? == false
-    #   return "H"
+    if @ship.health === 0
+      return "X"
+    if @ship.health < 3 && @ship.nil? == false
+      return "H"
     if empty? && @fired_upon == true
       return "M"
     else empty? && @fired_upon == false
