@@ -60,4 +60,12 @@ class CellTest < Minitest::Test
     assert @cell.fired_upon?
   end
 
+  def test_cell_not_been_fired_upon
+    assert_equal ".", @cell.render
+  end
+
+  # def test_if_render_returns_a_miss
+  #   assert_equal "M", @cell.render
+  # end
+
 end
