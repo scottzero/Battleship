@@ -30,6 +30,9 @@ class Board
     @cells.keys.include?(coordinate)
   end
 
+  def valid_placement?(ship, coordinate_array)
+  end
+
 
 
 
