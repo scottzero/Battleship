@@ -39,72 +39,31 @@ class Board
   end
 
   def valid_placement?(ship, coordinate_array)
-
-    #for each coordinate passed in check if an actual coordinate
     # require 'pry'; binding.pry
+
+    if ship.length == 2 && verify_valid_coordinate?(ship, coordinate_array) && validate_coor_with_ship_length?(ship, coordinate_array) && validate_no_overlapping?(ship, coordinate_array) && validate_ships_consecutive_for_submarine?(ship, coordinate_array)
+      return true
+    elsif ship.length == 3 && verify_valid_coordinate?(ship, coordinate_array) && validate_coor_with_ship_length?(ship, coordinate_array) && validate_no_overlapping?(ship, coordinate_array) && validate_ships_consecutive_for_cruiser?(ship, coordinate_array)
+      return true
+    else
+      return false
+
+    end
+  end
+
+  def verify_valid_coordinate?(ship, coordinate_array)
       coordinate_array.all? do |coordinate|
         valid_coordinate?(coordinate)
-      end #enum .each
-
-    #methods for each validation
-    valid_coor_and_length = validate_coor_with_ship_length?(ship, coordinate_array)
-
-    valid_consecutive_sub = validate_ships_consecutive_for_submarine?(ship, coordinate_array)
-    valid_consecutive_cruiser = validate_ships_consecutive_for_cruiser?(ship, coordinate_array)
-    # valid_no_overlap = validate_no_overlapping?(ship, coordinate_array)
-    # valid_no_diagonal = validate_not_diagonal?(ship, coordinate_array)
-    # require 'pry'; binding.pry
-
-    valid_coor_and_length #calling length method
-
-    # valid_no_overlap
-
-    # if @cells.empty? == false
-    #   return false
-    # end
-
-
-
-    if ship.length == 2
-      valid_consecutive_sub
-    else ship.length == 3
-      valid_consecutive_cruiser
     end
-
-    # coordinate_array.any? do |coordinate|
-    #   if coordinate.empty? == false
-    #     return false
-    #   else
-    #     return true
-    #   end
-    # end
-
-  end
-
-  def valid?(ship, coordinate_array)
-    if coordinate_array.all? do |coordinate|
-      valid_coordinate?(coordinate)
-    end &&
-    if ship.length == 2
-      validate_ships_consecutive_for_submarine?(ship, coordinate_array)
-    else ship.length == 3
-      validate_ships_consecutive_for_cruiser?(ship, coordinate_array)
-    end &&
-    coordinate_array.any? do |coordinate|
-      if coordinate.empty? == false
-        return false
-      end
-    end
-  end
   end
 
 
   def validate_coor_with_ship_length?(ship, coordinate_array)
-  #if valid, should return true, this works for length
+
   if ship.length == coordinate_array.length
     return true
   end
-  #require 'pry'; binding.pry
+  
   end #end length method
 
   def validate_ships_consecutive_for_submarine?(ship, coordinate_array)
@@ -150,15 +109,15 @@ class Board
 
 
 
-  # def validate_no_overlapping?(ship,coordinate_array)
-  #   coordinate_array.all? do |coordinate|
-  #     if coordinate.empty? == true
-  #       return true
-  #     else
-  #       return false
-  #   end #enum .each
-  #   end
-  # end
+  def validate_no_overlapping?(ship,coordinate_array)
+    coordinate_array.all? do |coordinate|
+      if @cells[coordinate].empty? == true
+        return true
+      else
+        return false
+      end #enum .each
+    end
+  end
 
 
 end #end class
