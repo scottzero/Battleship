@@ -31,4 +31,9 @@ class BoardTest < Minitest::Test
     refute @board.valid_coordinate?("A22")
   end
 
+  def test_validate_placement_of_two_ships
+
+    refute @board.valid_placement?(@cruiser, ["A1", "A2"]) 
+  end
+
 end #end class

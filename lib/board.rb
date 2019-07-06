@@ -30,7 +30,12 @@ class Board
     @cells.keys.include?(coordinate)
   end
 
-
-
-
+  def valid_placement?(ship, array_of_coordinates)
+    if ship.length == array_of_coordinates.count
+      return true
+    elsif array_of_coordinates.each_cons(2) do {|coordinate| return coordinate[0].ord && coordinate[1].ord}
+      return true if coordinate[0].ord == coordinate[1].ord +- 1
+    else return false
+    end
+  end
 end #end class
