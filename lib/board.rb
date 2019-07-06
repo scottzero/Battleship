@@ -33,32 +33,65 @@ class Board
   def place(ship,coordinate_array)
     if valid_placement?(ship,coordinate_array)
       coordinate_array.each do |coordinate|
-        @cells[coordinate].place_ship(cruiser_or_sub)
+        @cells[coordinate].place_ship(ship)
         end
       end
   end
 
   def valid_placement?(ship, coordinate_array)
+
     #for each coordinate passed in check if an actual coordinate
-      coordinate_array.each do |coordinate|
-        if valid_coordinate?(coordinate) == false
-          return false
-        end #end if
+    # require 'pry'; binding.pry
+      coordinate_array.all? do |coordinate|
+        valid_coordinate?(coordinate)
       end #enum .each
+
     #methods for each validation
     valid_coor_and_length = validate_coor_with_ship_length?(ship, coordinate_array)
+
     valid_consecutive_sub = validate_ships_consecutive_for_submarine?(ship, coordinate_array)
     valid_consecutive_cruiser = validate_ships_consecutive_for_cruiser?(ship, coordinate_array)
-    valid_no_overlap = validate_no_overlapping?(ship, coordinate_array)
+    # valid_no_overlap = validate_no_overlapping?(ship, coordinate_array)
     # valid_no_diagonal = validate_not_diagonal?(ship, coordinate_array)
+    # require 'pry'; binding.pry
     valid_coor_and_length #calling length method
+
+    # valid_no_overlap
+
+    # if @cells.empty? == false
+    #   return false
+    # end
+
     if ship.length == 2
-    valid_consecutive_sub
+      valid_consecutive_sub
+    else ship.length == 3
+      valid_consecutive_cruiser
+    end
+
+    # coordinate_array.any? do |coordinate|
+    #   if coordinate.empty? == false
+    #     return false
+    #   end
+    # end
   end
-    if ship.length == 3
-    valid_consecutive_cruiser
+
+  def valid?(ship, coordinate_array)
+    if coordinate_array.all? do |coordinate|
+      valid_coordinate?(coordinate)
+    end &&
+    if ship.length == 2
+      validate_ships_consecutive_for_submarine?(ship, coordinate_array)
+    else ship.length == 3
+      validate_ships_consecutive_for_cruiser?(ship, coordinate_array)
+    end &&
+    coordinate_array.any? do |coordinate|
+      if coordinate.empty? == false
+        return false
+      end
+    end
   end
   end
+
 
   def validate_coor_with_ship_length?(ship, coordinate_array)
   #if valid, should return true, this works for length
@@ -73,21 +106,20 @@ class Board
     total_ord_value_second_element = 0
     coordinate_array.each_cons(2) do |coordinate_pair|
       # require 'pry';binding.pry
-      coordinate_pair.to_a
       total_ord_value_first_element += (coordinate_pair.first[0].ord + coordinate_pair.first[1].ord)
-    coordinate_array.each_cons(2) do |coordinate_pair_2|
-      coordinate_pair_2.to_a
-      total_ord_value_second_element += (coordinate_pair_2.last[0].ord + coordinate_pair_2.last[1].ord)
+    # coordinate_array.each_cons(2) do |coordinate_pair_2|
+    #   coordinate_pair_2.to_a
+      total_ord_value_second_element += (coordinate_pair.last[0].ord + coordinate_pair.last[1].ord)
       # require 'pry';binding.pry
+      end
     if total_ord_value_first_element == total_ord_value_second_element +-1
       return true
     else
       return false
     end
   end
-  end
 
-  end
+
 
   def validate_ships_consecutive_for_cruiser?(ship, coordinate_array)
     total_ord_value_first_element = 0
@@ -110,23 +142,15 @@ class Board
 
 
 
-  def validate_no_overlapping?(ship,coordinate_array)
-    #logic for checking if ships dont overlap
-  end
-  # def validate_not_diagonal?(ship, coordinate_array)
-  #   total_ord_value_first_element = 0
-  #   total_ord_value_second_element = 0
-  #   coordinate_array.each_cons(2) do |coordinate_pair|
-  #     #require 'pry';binding.pry
-  #     total_ord_value_first_element += (coordinate_pair.first[0].ord + coordinate_pair.first[1].ord)
-  #   coordinate_array.each_cons(2) do |coordinate_pair_2|
-  #     total_ord_value_second_element += (coordinate_pair_2.last[0].ord + coordinate_pair_2.last[1].ord)
-  #     require 'pry';binding.pry
-  #   if total_ord_value_first_element == total_ord_value_second_element +-1
-  #     return true
-  #   else return false
+  # def validate_no_overlapping?(ship,coordinate_array)
+  #   coordinate_array.all? do |coordinate|
+  #     if coordinate.empty? == true
+  #       return true
+  #     else
+  #       return false
+  #   end #enum .each
   #   end
   # end
-  # end
+
 
 end #end class

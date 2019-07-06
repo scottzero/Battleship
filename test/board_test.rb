@@ -47,8 +47,10 @@ class BoardTest < Minitest::Test
     #if a cruiser should be  "A1" "A2" "A3" true
     refute @board.valid_placement?(@cruiser, ["A1", "A2", "A4"])
     refute @board.valid_placement?(@submarine, ["A1","C1"])
-    refute @board.valid_placement?(@submarine, ["C1", "B1"])
-    assert @board.valid_placement?(@cruiser, ["A1","A2","A3"])
+    # require 'pry'; binding.pry
+    assert_equal true, @board.valid_placement?(@submarine, ["B1", "C1"])
+    assert_equal true, @board.valid_placement?(@cruiser, ["A1","A2","A3"])
+    assert @board.valid_placement?(@submarine, ["D1","D2"])
   end
 
   def test_if_coordinates_are_diagonal
@@ -60,19 +62,28 @@ class BoardTest < Minitest::Test
   end
 
   def test_if_ships_overlap
-    skip
+    @board.place(@cruiser, ["A1", "A2", "A3"])
+    assert_equal false, @board.valid_placement?(@submarine, ["A1", "B1"])
   end
 
   def test_we_can_place_ship
-    skip
+
     @board.place(@cruiser, ["A1", "A2", "A3"])
+    @board.place(@submarine, ["C3", "C4"])
     @cell_1 = @board.cells["A1"]
     @cell_2 = @board.cells["A2"]
     @cell_3 = @board.cells["A3"]
+    @cell_4 = @board.cells["C3"]
+    @cell_5 = @board.cells["C4"]
 
     assert_equal @cruiser, @cell_1.ship
     assert_equal @cruiser, @cell_2.ship
     assert_equal @cruiser, @cell_3.ship
+    assert_equal @submarine, @cell_4.ship
+    assert_equal @submarine, @cell_5.ship
+    assert_equal @cell_2.ship, @cell_3.ship
+    # assert_equal @submarine, @cell_4.ship
+    # assert_equal @submarine, @cell_5.ship
   end
 
 end #end class
