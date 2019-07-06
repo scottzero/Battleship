@@ -37,9 +37,3 @@ class Board
 
 
 end #end class
-
-      "D4" => Cell.new("D4"),
-
-    }
-  end
-end
