@@ -7,9 +7,6 @@ class Board
 
   def cell_generator
     {
-
-    @cells = {
-
       "A1" => Cell.new("A1"),
       "A2" => Cell.new("A2"),
       "A3" => Cell.new("A3"),
