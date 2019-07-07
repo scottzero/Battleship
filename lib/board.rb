@@ -47,10 +47,17 @@ class Board
       end #enum .each
     #methods for each validation
     valid_coor_and_length = validate_coor_with_ship_length?(ship, coordinate_array)
-    valid_consecutive = validate_ships_consecutive?(ship, coordinate_array)
+    valid_consecutive_sub = validate_ships_consecutive_for_submarine?(ship, coordinate_array)
+    valid_consecutive_cruiser = validate_ships_consecutive_for_cruiser?(ship, coordinate_array)
     valid_no_overlap = validate_no_overlapping?(ship, coordinate_array)
-    valid_no_diagonal = validate_not_diagonal?(ship, coordinate_array)
+    # valid_no_diagonal = validate_not_diagonal?(ship, coordinate_array)
     valid_coor_and_length #calling length method
+    if ship.length == 2
+    valid_consecutive_sub
+  end
+    if ship.length == 3
+    valid_consecutive_cruiser
+  end
   end
 
   def validate_coor_with_ship_length?(ship, coordinate_array)
@@ -59,28 +66,67 @@ class Board
     return true
   end
   #require 'pry'; binding.pry
-end #end length method
+  end #end length method
 
-  def validate_ships_consecutive?(ship, coordinate_array)
-    #logic for checking coordinate consecutive
-    #1st iterate to get consecutive
-    #2nd iterate that new array to get ord value
-    #3rd if condition to compare those ord values
-    # coordinate_array.each_cons(2) {|coor| p coor}
-    #require 'pry'; binding.pry
-
-
-    # if coordinate_array[1].ord == coordinate_array[2].ord -1 &&
-    #   coordinate_array[1].ord == coordinate_array[0].ord + 1
+  def validate_ships_consecutive_for_submarine?(ship, coordinate_array)
+    total_ord_value_first_element = 0
+    total_ord_value_second_element = 0
+    coordinate_array.each_cons(2) do |coordinate_pair|
+      # require 'pry';binding.pry
+      coordinate_pair.to_a
+      total_ord_value_first_element += (coordinate_pair.first[0].ord + coordinate_pair.first[1].ord)
+    coordinate_array.each_cons(2) do |coordinate_pair_2|
+      coordinate_pair_2.to_a
+      total_ord_value_second_element += (coordinate_pair_2.last[0].ord + coordinate_pair_2.last[1].ord)
+      # require 'pry';binding.pry
+    if total_ord_value_first_element == total_ord_value_second_element +-1
+      return true
+    else
+      return false
+    end
   end
+  end
+
+  end
+
+  def validate_ships_consecutive_for_cruiser?(ship, coordinate_array)
+    total_ord_value_first_element = 0
+    total_ord_value_second_element = 0
+    total_ord_value_third_element = 0
+    coordinate_array.each_cons(3) do |coordinate_pair|
+      # require 'pry';binding.pry
+      total_ord_value_first_element += (coordinate_pair.first[0].ord + coordinate_pair.first[1].ord)
+      total_ord_value_second_element += (coordinate_pair[1][0].ord + coordinate_pair[1][1].ord)
+      total_ord_value_third_element += (coordinate_pair[2][0].ord + coordinate_pair[2][1].ord)
+    end
+      # require 'pry';binding.pry
+    if total_ord_value_first_element == total_ord_value_second_element +-1 && total_ord_value_first_element == total_ord_value_third_element +-2
+      return true
+    else
+      return false
+    end
+  end
+
+
+
 
   def validate_no_overlapping?(ship,coordinate_array)
     #logic for checking if ships dont overlap
   end
-
-  def validate_not_diagonal?(ship, coordinate_array)
-    #logic for checking ships not diagonal
-  end
-
+  # def validate_not_diagonal?(ship, coordinate_array)
+  #   total_ord_value_first_element = 0
+  #   total_ord_value_second_element = 0
+  #   coordinate_array.each_cons(2) do |coordinate_pair|
+  #     #require 'pry';binding.pry
+  #     total_ord_value_first_element += (coordinate_pair.first[0].ord + coordinate_pair.first[1].ord)
+  #   coordinate_array.each_cons(2) do |coordinate_pair_2|
+  #     total_ord_value_second_element += (coordinate_pair_2.last[0].ord + coordinate_pair_2.last[1].ord)
+  #     require 'pry';binding.pry
+  #   if total_ord_value_first_element == total_ord_value_second_element +-1
+  #     return true
+  #   else return false
+  #   end
+  # end
+  # end
 
 end #end class
