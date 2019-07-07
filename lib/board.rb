@@ -53,9 +53,9 @@ class Board
     valid_coor_and_length #calling length method
   end
 
-  def validate_coor_with_ship_length?(ship, ship_coordinates)
+  def validate_coor_with_ship_length?(ship, coordinate_array)
   #if valid, should return true, this works for length
-  if ship.length == ship_coordinates.length
+  if ship.length == coordinate_array.length
     return true
   end
   #require 'pry'; binding.pry
@@ -63,6 +63,15 @@ end #end length method
 
   def validate_ships_consecutive?(ship, coordinate_array)
     #logic for checking coordinate consecutive
+    #1st iterate to get consecutive
+    #2nd iterate that new array to get ord value
+    #3rd if condition to compare those ord values
+    # coordinate_array.each_cons(2) {|coor| p coor}
+    #require 'pry'; binding.pry
+
+
+    # if coordinate_array[1].ord == coordinate_array[2].ord -1 &&
+    #   coordinate_array[1].ord == coordinate_array[0].ord + 1
   end
 
   def validate_no_overlapping?(ship,coordinate_array)

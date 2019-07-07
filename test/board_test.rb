@@ -42,7 +42,6 @@ class BoardTest < Minitest::Test
   end
 
   def test_if_coordinates_are_consecutive
-    skip
     #if a cruiser should be  "A1" "A2" "A3" true
     refute @board.valid_placement?(@cruiser, ["A1","A2","A4"])
     # refute @board.valid_placement?(@submarine, ["A1","C1"])
