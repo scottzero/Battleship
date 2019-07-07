@@ -30,6 +30,7 @@ class Board
     @cells.keys.include?(coordinate)
   end
 
+scott_iteration_2
   def place(ship,coordinate_array)
     if valid_placement?(ship,coordinate_array)
       coordinate_array.each do |coordinate|
@@ -72,6 +73,5 @@ end #end length method
   def validate_not_diagonal?(ship, coordinate_array)
     #logic for checking ships not diagonal
   end
-
 
 end #end class

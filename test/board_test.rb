@@ -1,3 +1,4 @@
+
 require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/ship'
@@ -30,6 +31,7 @@ class BoardTest < Minitest::Test
     refute @board.valid_coordinate?("A22")
   end
 
+scott_iteration_2
   #ship placement validation
   def test_if_number_or_coordinates_in_array_is_same_as_ship_length
     #reverse testing for true and false
@@ -65,4 +67,5 @@ class BoardTest < Minitest::Test
     assert_equal @cruiser, @cell_2.ship
     assert_equal @cruiser, @cell_3.ship
   end
+
 end #end class

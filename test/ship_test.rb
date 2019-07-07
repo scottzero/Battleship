@@ -7,7 +7,10 @@ class ShipTest < Minitest::Test
 
   def setup
     @ship_1 = Ship.new("Cruiser",3)
+scott_iteration_2
     @sub = Ship.new("sub", 2 )
+
+josh_iteration_2
   end
 
   def test_if_ship_exists
