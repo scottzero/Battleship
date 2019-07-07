@@ -29,6 +29,7 @@ class BoardTest < Minitest::Test
     refute @board.valid_coordinate?("E1")
     refute @board.valid_coordinate?("A22")
   end
+
   #ship placement validation
   def test_if_number_or_coordinates_in_array_is_same_as_ship_length
     #reverse testing for true and false
@@ -49,5 +50,19 @@ class BoardTest < Minitest::Test
     # refute @board.valid_placement?(@submarine, ["C1", "B1"])
   end
 
+  def test_if_ships_overlap
+    skip
+  end
 
+  def test_we_can_place_ship
+    skip
+    @board.place(@cruiser, ["A1", "A2", "A3"])
+    @cell_1 = @board.cells["A1"]
+    @cell_2 = @board.cells["A2"]
+    @cell_3 = @board.cells["A3"]
+
+    assert_equal @cruiser, @cell_1.ship
+    assert_equal @cruiser, @cell_2.ship
+    assert_equal @cruiser, @cell_3.ship
+  end
 end #end class
