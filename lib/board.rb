@@ -31,13 +31,21 @@ class Board
   end
 
   def valid_placement?(ship, coordinate_array)
-    #buggy fucntions need to fix
-    # coordinate_array.each do |coordinate|
-    #   return false if valid_coordinate?(coordinate) == false
-    # end
+    #buggy functions need to fix
+    coordinate_array.each do |coordinate|
+      return false if valid_coordinate?(coordinate) == false
+    end
+    #need methods for each of these validations
+    valid_length = valid_ship_length?(ship, coordinate_array) #checking if ship length is the same as number of coordinates
+
+    #need to check if consecutive... currently broken 
+    # row_adjacent = same_row_and_adjacent?(ship, ship_coordinates)
+    # column_adjacent = same_column_and_adjacent?(ship,ship_coordinates)
   end
 
-
-
+  def valid_ship_length?(ship, ship_coordinates)
+  #if valid, should return true, this works for length
+  ship.length == ship_coordinates.length
+  end
 
 end #end class
