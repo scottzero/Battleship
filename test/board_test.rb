@@ -31,25 +31,32 @@ class BoardTest < Minitest::Test
     refute @board.valid_coordinate?("A22")
   end
 
-scott_iteration_2
   #ship placement validation
   def test_if_number_or_coordinates_in_array_is_same_as_ship_length
     #reverse testing for true and false
     #assert with correct number of coordinates per ship size
-    assert @board.valid_placement?(@submarine, ["A1", "A2"])
-    assert @board.valid_placement?(@cruiser, ["A1", "A3", "A4"])
+    assert @board.validate_coor_with_ship_length?(@submarine, ["A1", "A2"])
+    assert @board.validate_coor_with_ship_length?(@cruiser, ["A1", "A2", "A4"])
     #refute with incorrect number of coordinates per ship size
-    refute @board.valid_placement?(@cruiser, ["A1", "A2"])
-    refute @board.valid_placement?(@submarine, ["A1", "A3", "A4"])
+    refute @board.validate_coor_with_ship_length?(@cruiser, ["A1", "A2"])
+    refute @board.validate_coor_with_ship_length?(@submarine, ["A1", "A3", "A4"])
   end
 
   def test_if_coordinates_are_consecutive
-    skip
+
     #if a cruiser should be  "A1" "A2" "A3" true
-    refute @board.valid_placement?(@cruiser, ["A1","A2","A4"])
-    # refute @board.valid_placement?(@submarine, ["A1","C1"])
-    # refute @board.valid_placement?(@cruiser, ["A3","A2","A1"])
-    # refute @board.valid_placement?(@submarine, ["C1", "B1"])
+    refute @board.valid_placement?(@cruiser, ["A1", "A2", "A4"])
+    refute @board.valid_placement?(@submarine, ["A1","C1"])
+    refute @board.valid_placement?(@submarine, ["C1", "B1"])
+    assert @board.valid_placement?(@cruiser, ["A1","A2","A3"])
+  end
+
+  def test_if_coordinates_are_diagonal
+
+    #if a cruiser should be  "A1" "A2" "A3" true
+    refute @board.valid_placement?(@cruiser, ["A1", "B2", "C3"])
+    refute @board.valid_placement?(@submarine, ["A1","B2"])
+    refute @board.valid_placement?(@submarine, ["C2", "D3"])
   end
 
   def test_if_ships_overlap
