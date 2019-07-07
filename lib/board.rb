@@ -30,6 +30,14 @@ class Board
     @cells.keys.include?(coordinate)
   end
 
+  def place(ship,coordinate_array)
+    if valid_placement?(ship,coordinate_array)
+      coordinate_array.each do |coordinate|
+        @cells[coordinate].place_ship(cruiser_or_sub)
+        end
+      end
+  end
+
   def valid_placement?(ship, coordinate_array)
     #for each coordinate passed in check if an actual coordinate
       coordinate_array.each do |coordinate|
@@ -38,16 +46,20 @@ class Board
         end #end if
       end #enum .each
     #methods for each validation
-    valid_length = validate_coor_with_ship_length?(ship, coordinate_array)
+    valid_coor_and_length = validate_coor_with_ship_length?(ship, coordinate_array)
     valid_consecutive = validate_ships_consecutive?(ship, coordinate_array)
     valid_no_overlap = validate_no_overlapping?(ship, coordinate_array)
     valid_no_diagonal = validate_not_diagonal?(ship, coordinate_array)
+    valid_coor_and_length #calling length method
   end
 
   def validate_coor_with_ship_length?(ship, ship_coordinates)
   #if valid, should return true, this works for length
-  ship.length == ship_coordinates.length
+  if ship.length == ship_coordinates.length
+    return true
   end
+  #require 'pry'; binding.pry
+end #end length method
 
   def validate_ships_consecutive?(ship, coordinate_array)
     #logic for checking coordinate consecutive
@@ -55,7 +67,6 @@ class Board
 
   def validate_no_overlapping?(ship,coordinate_array)
     #logic for checking if ships dont overlap
-    
   end
 
   def validate_not_diagonal?(ship, coordinate_array)
