@@ -31,6 +31,10 @@ class Board
   end
 
   def valid_placement?(ship, coordinate_array)
+    #buggy fucntions need to fix
+    # coordinate_array.each do |coordinate|
+    #   return false if valid_coordinate?(coordinate) == false
+    # end
   end
 
 

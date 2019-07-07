@@ -31,8 +31,18 @@ class BoardTest < Minitest::Test
   end
   #ship placement validation
   def test_if_number_or_coordinates_in_array_is_same_as_ship_length
+    # assert @board.valid_placement?(@cruiser, ["A1", "A2"])
+    # assert @board.valid_placement?(@submarine, ["A1", "A3", "A4"])
     refute @board.valid_placement?(@cruiser, ["A1", "A2"])
     refute @board.valid_placement?(@submarine, ["A1", "A3", "A4"])
+  end
+
+  def test_if_coordinates_are_consecutive
+    refute @board.valid_placement?(@cruiser, ["A1","A2","A4"])
+    refute @board.valid_placement?(@submarine, ["A1","C1"])
+    refute @board.valid_placement?(@cruiser, ["A3","A2","A1"])
+    refute @board.valid_placement?(@submarine, ["C1", "B1"])
+
   end
 
 
