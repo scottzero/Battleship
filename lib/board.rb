@@ -31,21 +31,36 @@ class Board
   end
 
   def valid_placement?(ship, coordinate_array)
-    #buggy functions need to fix
-    coordinate_array.each do |coordinate|
-      return false if valid_coordinate?(coordinate) == false
-    end
-    #need methods for each of these validations
-    valid_length = valid_ship_length?(ship, coordinate_array) #checking if ship length is the same as number of coordinates
-
-    #need to check if consecutive... currently broken 
-    # row_adjacent = same_row_and_adjacent?(ship, ship_coordinates)
-    # column_adjacent = same_column_and_adjacent?(ship,ship_coordinates)
+    #for each coordinate passed in check if an actual coordinate
+      coordinate_array.each do |coordinate|
+        if valid_coordinate?(coordinate) == false
+          return false
+        end #end if
+      end #enum .each
+    #methods for each validation
+    valid_length = validate_coor_with_ship_length?(ship, coordinate_array)
+    valid_consecutive = validate_ships_consecutive?(ship, coordinate_array)
+    valid_no_overlap = validate_no_overlapping?(ship, coordinate_array)
+    valid_no_diagonal = validate_not_diagonal?(ship, coordinate_array)
   end
 
-  def valid_ship_length?(ship, ship_coordinates)
+  def validate_coor_with_ship_length?(ship, ship_coordinates)
   #if valid, should return true, this works for length
   ship.length == ship_coordinates.length
   end
+
+  def validate_ships_consecutive?(ship, coordinate_array)
+    #logic for checking coordinate consecutive
+  end
+
+  def validate_no_overlapping?(ship,coordinate_array)
+    #logic for checking if ships dont overlap
+    
+  end
+
+  def validate_not_diagonal?(ship, coordinate_array)
+    #logic for checking ships not diagonal
+  end
+
 
 end #end class
