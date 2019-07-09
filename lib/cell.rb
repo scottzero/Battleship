@@ -47,4 +47,14 @@ class Cell
       return "."
     end
   end
+
+  def result_of_turn
+    if render == "M"
+      return "miss"
+    elsif render == "H"
+      return "hit"
+    else render == "X"
+      "sunk ship"
+    end
+  end
 end

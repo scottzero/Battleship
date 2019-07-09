@@ -11,6 +11,7 @@ class Game
     @user_cruiser = Ship.new("Cruiser", 3)  #user object starts with two ships
     @user_submarine = Ship.new("Submarine", 2)
     @user_ships = [@user_cruiser, @user_submarine]
+    @user_guesses = []
     @winner = nil
   end
 
@@ -61,21 +62,52 @@ class Game
         puts "You have given invalid coordinates. Please make sure that the coordinates are consecutive in ascending order \n and are not diagonal. Example: A1 A2 A3 or A1 B2. Please try again."
         user_input = gets.chomp.upcase.split(" ")
         puts "\n" * 2
-
       end
       @user_board.place(ship, user_input)
       # require 'pry'; binding.pry
     end
 
-    puts @user_board.render(true)
+    # puts "Here is what your board looks like:"
+    # puts @user_board.render(true)
+    # puts "\n" * 5
     # require 'pry'; binding.pry
-    #split user input into A and 1 ? ..
-
+    turn
   end #end play_setup
 
   def turn
-    #TODO: this method->
-    #-render user_board
+    puts "=============COMPUTER BOARD============="
+    puts @ai_board.render
+    puts "=============PLAYER BOARD============="
+    puts @user_board.render(true)
+    puts "\n" * 2
+    puts "Please enter a computer board coordinate to fire on"
+    user_coordinate = gets.chomp.upcase.split(" ").pop
+    puts "\n" * 2
+    # require 'pry'; binding.pry
+
+    while @ai_board.valid_coordinate?(user_coordinate) == false
+      puts "You have given an invalid coordinate. Please make sure that the coordinate is one of the 16 possible coordinates on the computer's board. Please try again."
+      user_coordinate = gets.chomp.upcase.split(" ")
+      puts "\n" * 2
+    end
+
+    while @user_guesses.include?(user_coordinate) == true
+      puts "You have already entered this coordinate. Please try again."
+      user_coordinate = gets.chomp.upcase.split(" ")
+      puts "\n" * 2
+    end
+    @ai_board.fire_upon(user_coordinate)
+    @user_guesses << user_coordinate
+    computer_target = @ai.target
+    @ai.fire(@user_board, computer_target)
+    puts "=============COMPUTER BOARD============="
+    puts @ai_board.render
+    puts "=============PLAYER BOARD============="
+    puts @user_board.render(true)
+    puts "\n"
+    puts "Your shot on #{user_coordinate} was a #{@ai_board.cells[user_coordinate].result_of_turn}."
+    puts "My shot on #{computer_target} was a #{@user_board.cells[computer_target].result_of_turn}."
+    require 'pry'; binding.pry
     #-render ai_board
     #-asks user for coordinates for a shot, via prompt
     #uses the coordinates for fired_upon and fire methods
