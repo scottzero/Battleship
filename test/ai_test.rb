@@ -15,13 +15,27 @@ class AiTest < MiniTest::Test
 
   #TODO:
 
-          #tests for validation of existence,
+#tests for validation of existence,
 
-          #has 2 ships by defualt,
+  def test_ai_exists
 
+  end
+#has 2 ships by defualt,
+  def test_ai_has_2_ships
 
-          #has access to hash for targets,
+  end
 
-          #test it can fire 16 times
+#has access to hash for targets,
+  def test_it_has_hash_count_of_targets_to_fire_upon
 
-          #test it can place valid ships randomly
+  end
+
+#test it can fire 16 times
+  def test_it_can_fire_at_the_hash_coordinate_count_times
+
+  end
+#test it can place valid ships randomly
+  def test_it_can_validate_sample_coords_for_ship_placement
+  end
+
+end #end test 
