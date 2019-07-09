@@ -15,12 +15,19 @@ class Game
     @winner = nil
   end
 
+
+
   def start_up #method to call main menu and game setup methods
     main_menu #welcome message to see if user wants to play or quit
 
   end
 
   def main_menu
+    def quit
+      print "Hope to see you play next time, quitting game..."
+      puts "\n" * 3
+      exit!
+    end
     print "\n" * 3
     puts "***-***" * 10
     puts "÷÷÷÷÷÷W E L C O M E ÷÷÷÷÷÷ T O ÷÷÷÷÷ B A T T L E S H I P ÷÷÷÷÷÷"
@@ -34,12 +41,14 @@ class Game
       puts "Time to start the game."
       play_setup
     elsif user_input_menu == "quit"
-      print "Hope to see you play next time, quitting game..."
-      puts "\n" * 3
+      quit
     else
       p "You gave me an invalid input. Please enter play or quit. Restarting game..."
       main_menu
     end
+
+
+
   end #end main_menu method
 
   def play_setup
@@ -78,22 +87,27 @@ class Game
   def turn
     puts "\n" * 2
     puts "Please enter a computer board coordinate to fire on"
-    user_coordinate = gets.chomp.upcase.split(" ").pop
-    puts "\n" * 2
+    # user_coordinate = gets.chomp.upcase.split(" ").pop
+    # puts "\n" * 2
     # require 'pry'; binding.pry
 
-    while @ai_board.valid_coordinate?(user_coordinate) == false
-      puts "You have given an invalid coordinate. Please make sure that the coordinate is one of the 16 possible coordinates on the computer's board. Please try again."
-      user_coordinate = gets.chomp.upcase.split(" ")
-      puts "\n" * 2
+    ready_to_fire = false
+
+    until ready_to_fire
+      user_coordinate = gets.chomp.upcase.split(" ").pop
+      # require 'pry'; binding.pry
+      if @ai_board.valid_coordinate?(user_coordinate) == false
+        puts "You have given an invalid coordinate. Please make sure that the coordinate is one of the 16 possible coordinates on the computer's board. Please try again."
+        puts "\n" * 2
+        # require 'pry'; binding.pry
+      elsif @user_guesses.include?(user_coordinate) == true
+        puts "You have already entered this coordinate. Please try again."
+        puts "\n" * 2
+      else ready_to_fire = true
+
+      end
     end
 
-
-    while @user_guesses.include?(user_coordinate) == true
-      puts "You have already entered this coordinate. Please try again."
-      user_coordinate = gets.chomp.upcase.split(" ")
-      puts "\n" * 2
-    end
 
     @ai_board.fire_upon(user_coordinate)
     @user_guesses << user_coordinate
@@ -126,6 +140,11 @@ class Game
 
     @ai_board = Board.new #board for ai
     @user_board  = Board.new #board for human player
+    @ai = Ai.new(@ai_board, @user_board)
+    @user_cruiser = Ship.new("Cruiser", 3)  #user object starts with two ships
+    @user_submarine = Ship.new("Submarine", 2)
+    @user_ships = [@user_cruiser, @user_submarine]
+    @user_guesses = []
 
     start_up
 
@@ -135,5 +154,20 @@ class Game
     #prompt to exit to main menu
 
   end #end end_game method
+
+
+
+  # while @ai_board.valid_coordinate?(user_coordinate) == false
+  #   puts "You have given an invalid coordinate. Please make sure that the coordinate is one of the 16 possible coordinates on the computer's board. Please try again."
+  #   user_coordinate = gets.chomp.upcase.split(" ")
+  #   puts "\n" * 2
+  # end
+  #
+  #
+  # while @user_guesses.include?(user_coordinate) == true
+  #   puts "You have already entered this coordinate. Please try again."
+  #   user_coordinate = gets.chomp.upcase.split(" ")
+  #   puts "\n" * 2
+  # end
 
 end
