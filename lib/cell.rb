@@ -9,9 +9,9 @@ class Cell
 
   end
 
-  def place_ship(cruiser_or_sub)
-    @ship = cruiser_or_sub
-  end
+  def place_ship(ship)
+    @ship = ship
+  end 
 
   def empty?
     @ship.nil?
