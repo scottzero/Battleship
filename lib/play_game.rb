@@ -14,9 +14,9 @@ class Game
 
   def start_up #method to call main menu and game setup methods
     main_menu #welcome message to see if user wants to play or quit
-    play_setup #places ships randomly,user enters sequences to place both ships, recognize invalid ships
-    turn #
-    end_game
+    play_setup #TODO: places ships randomly,user enters sequences to place both ships, recognize invalid ships
+    turn #TODO: create turn functionaility for ai and user
+    end_game #TODO: display the winner and notate end of game
   end
 
   def main_menu
@@ -24,10 +24,10 @@ class Game
     puts "B A T T L E S H I P"
     print "-" * 10
     puts "Enter play to play OR Enter quit to quit:"
-    user_input = gets.chomp.downcase
+    user_input_menu = gets.chomp.downcase
     print "\n" * 2
 
-  case user_input
+  case user_input_menu
     when "play"
       "Time to start the game."
     when "quit"
@@ -42,8 +42,12 @@ class Game
     puts "I have laid out my ships on the grid."
     puts "You now need tio lay out your two ships."
     puts "The Cruiser is three units long and the Submarine is two units long."
-    #end ai response, now player must place ships
-    
+    #end ai response, now user must place ships
+    @user_ships.map do |ship| #will iterate over ships for the user, 1 cruiser and 1 sub
+    puts "Please enter coordinates for the #{ship.name} and #{ship.length}:"
+    user_input_ships = gets.chomp.upcase #since coordinates are in caps
+    #split user input into A and 1 ? ...
+
 
   end #end play_setup
 
