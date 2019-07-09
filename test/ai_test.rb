@@ -37,12 +37,29 @@ class AiTest < MiniTest::Test
   end
 
   def test_ai_has_2_ships
+    skip
     @ai.place_cruiser_ai(@ai_board)
     @ai.place_submarine_ai(@ai_board)
 
     assert_equal "  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n", @ai_board.render(true)
   end
 
+
+  def test_that_AI_has_fired
+    skip
+    @ai.fire(@user_board)
+
+    assert_equal "  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n", @user_board.render
+  end
+
+  def test_that_AI_has_fired_on_nine_spots
+    skip
+    9.times do
+      @ai.fire(@user_board, @ai.target)
+    end
+
+    assert_equal "  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n", @user_board.render
+  end
 #has access to hash for targets,
   def test_it_has_hash_count_of_targets_to_fire_upon
     skip
@@ -57,6 +74,15 @@ class AiTest < MiniTest::Test
 #test it can place valid ships randomly
   def test_it_can_validate_sample_coords_for_ship_placement
     skip
+  end
+
+  def test_it_can_fire_16_times
+    16.times do
+      @ai.fire(@user_board, @ai.target)
+
+    end
+  assert_empty @ai.possible_targets
+  assert_equal "  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n", @user_board.render
   end
 
 end #end test

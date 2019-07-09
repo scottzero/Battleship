@@ -1,5 +1,6 @@
+require 'pry'
 class Ai
-  attr_reader :ai_board
+  attr_reader :ai_board, :possible_targets
   #TODO
 ##ai will be born with their own board and a userboard to fire upon "targets"
 ##ai will be born with 2 ships
@@ -8,9 +9,32 @@ class Ai
   def initialize(ai_board, user_board)
     @ai_board = Board.new
     @user_board = Board.new
-    @targets = @user_board.cells.keys.shuffle #randmizes potential targets for ai?
+    @possible_targets = @user_board.cells.keys.shuffle #randmizes potential targets for ai?
     @ai_ship_cruiser = Ship.new("Cruiser", 3)
     @ai_ship_submarine = Ship.new("Submarine", 2)
+  end
+
+  def fire(board, target)
+
+      board.cells[target].fire_upon
+      # require 'pry'; binding.pry
+      # coordinate_array = user_board.cells.keys
+      # coordinate_array.flatten
+      # fired_coordinates_array = []
+      #
+      #
+      # fired_coordinates_array << coordinate_array.delete(coordinate_array.sample)
+      # # require 'pry'; binding.pry
+      #
+      # if user_board.cells[fired_coordinates_array.last].fired_upon == false
+      #
+      #   user_board.cells[fired_coordinates_array.last].fire_upon
+    # end
+
+  end
+
+  def target
+    @possible_targets.pop
   end
 
   def place_cruiser_ai(board)
