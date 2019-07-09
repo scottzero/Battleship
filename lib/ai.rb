@@ -1,6 +1,6 @@
 require 'pry'
 class Ai
-  attr_reader :ai_board, :possible_targets
+  attr_reader :ai_board, :possible_targets, :ai_ship_cruiser, :ai_ship_submarine
   #TODO
 ##ai will be born with their own board and a userboard to fire upon "targets"
 ##ai will be born with 2 ships

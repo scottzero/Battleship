@@ -30,15 +30,15 @@ class Game
     user_input_menu = gets.chomp.downcase
     print "\n" * 2
 
-  case user_input_menu
-    when "play"
+    if user_input_menu == "play"
       puts "Time to start the game."
       play_setup
-    when "quit"
+    elsif user_input_menu == "quit"
       print "Hope to see you play next time, quitting game..."
       puts "\n" * 3
     else
-      p "You gave me an invalid input. Please enter play or quit."
+      p "You gave me an invalid input. Please enter play or quit. Restarting game..."
+      main_menu
     end
   end #end main_menu method
 
@@ -67,18 +67,15 @@ class Game
       # require 'pry'; binding.pry
     end
 
-    # puts "Here is what your board looks like:"
-    # puts @user_board.render(true)
-    # puts "\n" * 5
+    puts "=============COMPUTER BOARD============="
+    puts @ai_board.render
+    puts "=============PLAYER BOARD============="
+    puts @user_board.render(true)
     # require 'pry'; binding.pry
     turn
   end #end play_setup
 
   def turn
-    puts "=============COMPUTER BOARD============="
-    puts @ai_board.render
-    puts "=============PLAYER BOARD============="
-    puts @user_board.render(true)
     puts "\n" * 2
     puts "Please enter a computer board coordinate to fire on"
     user_coordinate = gets.chomp.upcase.split(" ").pop
@@ -91,13 +88,16 @@ class Game
       puts "\n" * 2
     end
 
+
     while @user_guesses.include?(user_coordinate) == true
       puts "You have already entered this coordinate. Please try again."
       user_coordinate = gets.chomp.upcase.split(" ")
       puts "\n" * 2
     end
+
     @ai_board.fire_upon(user_coordinate)
     @user_guesses << user_coordinate
+
     computer_target = @ai.target
     @ai.fire(@user_board, computer_target)
     puts "=============COMPUTER BOARD============="
@@ -107,23 +107,28 @@ class Game
     puts "\n"
     puts "Your shot on #{user_coordinate} was a #{@ai_board.cells[user_coordinate].result_of_turn}."
     puts "My shot on #{computer_target} was a #{@user_board.cells[computer_target].result_of_turn}."
-    require 'pry'; binding.pry
-    #-render ai_board
-    #-asks user for coordinates for a shot, via prompt
-    #uses the coordinates for fired_upon and fire methods
-    #confirms hit or miss with boolean
-    #or lets user know those coords have already been fired upon
-    #based on that hit or miss
-    #return its a hit or not
-    #then ai takes its turn using ai class methods
-    #end a turn or each shot by displayin that turns result
-    #repeat proccess until there is a winner
+    #require 'pry'; binding.pry
+    turn until @ai.ai_ship_cruiser.sunk? && @ai.ai_ship_submarine.sunk? || @user_cruiser.sunk? && @user_submarine.sunk?
+    end_game
     #should define a winner by certain circumstances, (when all opponent ships are sunk)
     #before repeating this we need to determine if there is a winner,
     #if there is a winner at some point break out of the method
   end #end turn  method
 
   def end_game
+    if @ai.ai_ship_cruiser.sunk? && @ai.ai_ship_submarine.sunk?
+      puts "\n" * 3
+      puts "******** You won! ********"
+    else @user_cruiser.sunk? && @user_submarine.sunk?
+      puts "\n" * 3
+      puts "******** I won! ********"
+    end
+
+    @ai_board = Board.new #board for ai
+    @user_board  = Board.new #board for human player
+
+    start_up
+
     #--TODO: needs to display winner
     #can show both ai board and user board comparisons
     #congratulate winner
