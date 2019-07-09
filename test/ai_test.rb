@@ -30,14 +30,17 @@ class AiTest < MiniTest::Test
   end
 #has 2 ships by defualt,
   def test_ai_has_1_ship
+    skip
     @ai.place_cruiser_ai(@ai_board)
 
     assert_equal "  1 2 3 4 \nA S . S S \nB . . . . \nC . . . . \nD . . . . \n", @ai_board.render(true)
   end
 
   def test_ai_has_2_ships
-    skip
+    @ai.place_cruiser_ai(@ai_board)
+    @ai.place_submarine_ai(@ai_board)
 
+    assert_equal "  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n", @ai_board.render(true)
   end
 
 #has access to hash for targets,
