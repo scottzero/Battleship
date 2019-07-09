@@ -35,7 +35,7 @@ class Game
     else
       "You gave me #{user_input}...please enter a valid option."
     end
-  end #end main menu method
+  end #end main_menu method
 
   def play_setup
     @ai.place_ships #method in ai class to place ships
@@ -52,9 +52,29 @@ class Game
   end #end play_setup
 
   def turn
-  end
+    #TODO: this method->
+    #-render user_board
+    #-render ai_board
+    #-asks user for coordinates for a shot, via prompt
+    #uses the coordinates for fired_upon and fire methods
+    #confirms hit or miss with boolean
+    #or lets user know those coords have already been fired upon
+    #based on that hit or miss
+    #return its a hit or not
+    #then ai takes its turn using ai class methods
+    #end a turn or each shot by displayin that turns result
+    #repeat proccess until there is a winner
+    #should define a winner by certain circumstances, (when all opponent ships are sunk)
+    #before repeating this we need to determine if there is a winner,
+    #if there is a winner at some point break out of the method
+  end #end turn  method
 
   def end_game
-  end
+    #--TODO: needs to display winner
+    #can show both ai board and user board comparisons
+    #congratulate winner
+    #prompt to exit to main menu
+
+  end #end end_game method
 
 end
