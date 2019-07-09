@@ -116,4 +116,10 @@ class BoardTest < Minitest::Test
     # assert_equal @submarine, @cell_5.ship
   end
 
+  def test_that_it_renders_plain_board
+    @board.place(@cruiser, ["A1", "A2", "A3"])
+
+    assert_equal "  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n", @board.render
+  end
+
 end #end class
