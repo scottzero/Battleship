@@ -11,7 +11,8 @@ class Cell
 
   def place_ship(ship)
     @ship = ship
-  end 
+    @empty = false
+  end
 
   def empty?
     @ship.nil?
