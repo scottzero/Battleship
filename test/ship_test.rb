@@ -43,4 +43,8 @@ class ShipTest < Minitest::Test
     assert_equal true, @ship_1.sunk?
   end
 
+
+
+
+
 end #end_test

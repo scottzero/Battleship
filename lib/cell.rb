@@ -32,6 +32,7 @@ class Cell
      return @ship.hit
     end
   end
+end
 
   def render(ship_in_cell = false)
 
