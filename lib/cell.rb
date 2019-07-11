@@ -1,12 +1,10 @@
 class Cell
   attr_reader :coordinate, :ship
-
   def initialize(coordinate)
     @coordinate = coordinate
     @empty = true
     @ship = ship
     @fired_upon = false
-
   end
 
   def place_ship(ship)
@@ -32,10 +30,8 @@ class Cell
      return @ship.hit
     end
   end
-end
 
   def render(ship_in_cell = false)
-
     if @fired_upon == true && @ship.nil? == false && @ship.health == 0
       return "X"
     elsif @fired_upon == true && @ship.nil? == false && @ship.health > 0
