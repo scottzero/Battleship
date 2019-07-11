@@ -38,30 +38,7 @@ class Ai
         @ai_board.place(@ai_ship_cruiser, coordinate_array_1)
       end
     end
-end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  end
 
   def place_submarine_ai(board)
     100000.times do
@@ -70,11 +47,8 @@ end
       number_value = coordinate_array_2.first[1].to_i
       number_value_2 = number_value +1
       coordinate_array_2 << coordinate_array_2.first[0] + number_value_2.to_s
-      # require 'pry'; binding.pry
       if board.valid_placement?(@ai_ship_submarine, coordinate_array_2) && board.cells[coordinate_array_2.first].empty? && board.cells[coordinate_array_2.last].empty?
-
         return board.place(@ai_ship_submarine, coordinate_array_2)
-        # require 'pry'; binding.pry
       end
       coordinate_array_2.pop(1)
       letter_value = coordinate_array_2.first[0].ord
@@ -84,31 +58,6 @@ end
         @ai_board.place(@ai_ship_submarine, coordinate_array_2)
       end
     end
+ end
 
-
-
-
-    #validates a random set of coordinates and calls place ship method
-  end
-
-
-
-
-
-
-
-
-
-
-
-
-  def targets
-    #TODO: should have access to possible targets and update them,
-    #if an array could remove targets that are no long feasible
-  end
-
-  def fire_at_targets(targets)
-    #TODO: needs to access player_board, passing targets, then call fire upon
-  end
-
-end #end class
+end
