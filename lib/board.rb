@@ -1,4 +1,3 @@
-require 'pry'
 class Board
   attr_reader :cells
 
@@ -27,76 +26,99 @@ class Board
     }
   end
 
-  def valid_coordinate?(coordinate) #method 1
+  def valid_coordinate?(coordinate)
     @cells.keys.include?(coordinate)
   end
 
-  def valid_placement?(ship, coordinate_array) #method 7
-        validate_coor_with_ship_length?(ship, coordinate_array) && validate_no_overlapping?(ship,coordinate_array) && (validate_ships_consecutive_for_submarine?(ship, coordinate_array) || validate_ships_consecutive_for_cruiser?(ship, coordinate_array))
-  end
-
-  def validate_coor_with_ship_length?(ship, coordinate_array) #method 2
-    if ship.length == coordinate_array.length
-      return true
-    end
-  end
-
-
-  def validate_ships_consecutive_for_submarine?(ship, coordinate_array) #method 3
-      total_ord_value_first_element = 0
-      total_ord_value_second_element = 0
-      coordinate_array.each_cons(2) do |coordinate_pair|
-      total_ord_value_first_element += (coordinate_pair.first[0].ord + coordinate_pair.first[1].ord)
-    end
-      coordinate_array.each_cons(2) do |coordinate_pair_2|
-      total_ord_value_second_element += (coordinate_pair_2.last[0].ord + coordinate_pair_2.last[1].ord)
-    end
-    if total_ord_value_first_element == total_ord_value_second_element +-1
-      return true
-    else
-      return false
-    end
-  end
-
-  def validate_ships_consecutive_for_cruiser?(ship, coordinate_array) #method 4
-      total_ord_value_first_element = 0
-      total_ord_value_second_element = 0
-      total_ord_value_third_element = 0
-      coordinate_array.each_cons(3) do |coordinate_pair|
-      total_ord_value_first_element += (coordinate_pair.first[0].ord + coordinate_pair.first[1].ord)
-      total_ord_value_second_element += (coordinate_pair[1][0].ord + coordinate_pair[1][1].ord)
-      total_ord_value_third_element += (coordinate_pair[2][0].ord + coordinate_pair[2][1].ord)
-    end
-      if total_ord_value_first_element == total_ord_value_second_element +-1 && total_ord_value_first_element == total_ord_value_third_element +-2
-        return true
-      else
-        return false
-      end
-  end
-
-  def validate_no_overlapping?(ship,coordinate_array) #method 5
-    coordinate_array.all? do |coordinate|
-       if @cells[coordinate].empty? == true
-      return true
-    else
-      return false
-    end
-  end
-end
-
-  def place(ship,coordinate_array) #method 6
+  def place(ship,coordinate_array)
     if valid_placement?(ship,coordinate_array)
       coordinate_array.each do |coordinate|
         @cells[coordinate].place_ship(ship)
         end
       end
-      return ship
   end
 
-
-
-  def render
-
+  def valid_placement?(ship, coordinate_array)
+    if ship.length == 2 && verify_valid_coordinate?(ship, coordinate_array) && validate_coor_with_ship_length?(ship, coordinate_array) && validate_no_overlapping?(ship, coordinate_array) && validate_ships_consecutive_for_submarine?(ship, coordinate_array)
+      return true
+    elsif ship.length == 3 && verify_valid_coordinate?(ship, coordinate_array) && validate_coor_with_ship_length?(ship, coordinate_array) && validate_no_overlapping?(ship, coordinate_array) && validate_ships_consecutive_for_cruiser?(ship, coordinate_array)
+      return true
+    else
+      return false
+    end
   end
 
-end #end class
+  def verify_valid_coordinate?(ship, coordinate_array)
+      coordinate_array.all? do |coordinate|
+        valid_coordinate?(coordinate)
+    end
+  end
+
+  def validate_coor_with_ship_length?(ship, coordinate_array)
+    if ship.length == coordinate_array.length
+      return true
+    end
+  end
+
+  def validate_ships_consecutive_for_submarine?(ship, coordinate_array)
+    total_ord_value_element_1_character_1 = 0
+    total_ord_value_element_1_character_2 = 0
+    total_ord_value_element_2_character_1 = 0
+    total_ord_value_element_2_character_2 = 0
+    coordinate_array.each_cons(2) do |coordinate_pair|
+      total_ord_value_element_1_character_1 += coordinate_pair.first[0].ord
+      total_ord_value_element_1_character_2 += coordinate_pair.first[1].ord
+      total_ord_value_element_2_character_1 += coordinate_pair.last[0].ord
+      total_ord_value_element_2_character_2 += coordinate_pair.last[1].ord
+      end
+    if total_ord_value_element_1_character_1 == total_ord_value_element_2_character_1 && total_ord_value_element_1_character_2 == total_ord_value_element_2_character_2 +-1
+      return true
+    elsif total_ord_value_element_1_character_2 == total_ord_value_element_2_character_2 && total_ord_value_element_1_character_1 == total_ord_value_element_2_character_1 +-1
+      return true
+    else
+      return false
+    end
+  end
+
+  def validate_ships_consecutive_for_cruiser?(ship, coordinate_array)
+    total_ord_value_element_1_character_1 = 0
+    total_ord_value_element_1_character_2 = 0
+    total_ord_value_element_2_character_1 = 0
+    total_ord_value_element_2_character_2 = 0
+    total_ord_value_element_3_character_1 = 0
+    total_ord_value_element_3_character_2 = 0
+    coordinate_array.each_cons(3) do |coordinate_pair|
+      total_ord_value_element_1_character_1 += coordinate_pair.first[0].ord
+      total_ord_value_element_1_character_2 += coordinate_pair.first[1].ord
+      total_ord_value_element_2_character_1 += coordinate_pair[1][0].ord
+      total_ord_value_element_2_character_2 += coordinate_pair[1][1].ord
+      total_ord_value_element_3_character_1 += coordinate_pair.last[0].ord
+      total_ord_value_element_3_character_2 += coordinate_pair.last[1].ord
+      end
+    if total_ord_value_element_1_character_1 == total_ord_value_element_2_character_1 && total_ord_value_element_1_character_1 == total_ord_value_element_3_character_1 && (total_ord_value_element_1_character_2 + 1) == total_ord_value_element_2_character_2 && (total_ord_value_element_3_character_2 - 1) == total_ord_value_element_2_character_2
+      return true
+    elsif total_ord_value_element_1_character_2 == total_ord_value_element_2_character_2 && total_ord_value_element_1_character_2 == total_ord_value_element_3_character_2 && (total_ord_value_element_1_character_1 +1) == total_ord_value_element_2_character_1 && total_ord_value_element_2_character_1 == (total_ord_value_element_3_character_1 - 1)
+      return true
+    else
+      return false
+    end
+  end
+
+  def validate_no_overlapping?(ship,coordinate_array)
+    coordinate_array.all? do |coordinate|
+      if @cells[coordinate].empty? == true
+        return true
+      else
+        return false
+      end 
+    end
+  end
+
+  def render(ship_in_cell = false)
+    return "  1 2 3 4 \nA #{@cells["A1"].render(ship_in_cell)} #{@cells["A2"].render(ship_in_cell)} #{@cells["A3"].render(ship_in_cell)} #{@cells["A4"].render(ship_in_cell)} \nB #{@cells["B1"].render(ship_in_cell)} #{@cells["B2"].render(ship_in_cell)} #{@cells["B3"].render(ship_in_cell)} #{@cells["B4"].render(ship_in_cell)} \nC #{@cells["C1"].render(ship_in_cell)} #{@cells["C2"].render(ship_in_cell)} #{@cells["C3"].render(ship_in_cell)} #{@cells["C4"].render(ship_in_cell)} \nD #{@cells["D1"].render(ship_in_cell)} #{@cells["D2"].render(ship_in_cell)} #{@cells["D3"].render(ship_in_cell)} #{@cells["D4"].render(ship_in_cell)} \n"
+  end
+
+  def fire_upon(coordinate)
+    @cells[coordinate].fire_upon
+  end
+end
