@@ -39,15 +39,12 @@ class Board
   end
 
   def valid_placement?(ship, coordinate_array)
-    # require 'pry'; binding.pry
-
     if ship.length == 2 && verify_valid_coordinate?(ship, coordinate_array) && validate_coor_with_ship_length?(ship, coordinate_array) && validate_no_overlapping?(ship, coordinate_array) && validate_ships_consecutive_for_submarine?(ship, coordinate_array)
       return true
     elsif ship.length == 3 && verify_valid_coordinate?(ship, coordinate_array) && validate_coor_with_ship_length?(ship, coordinate_array) && validate_no_overlapping?(ship, coordinate_array) && validate_ships_consecutive_for_cruiser?(ship, coordinate_array)
       return true
     else
       return false
-
     end
   end
 
@@ -57,14 +54,11 @@ class Board
     end
   end
 
-
   def validate_coor_with_ship_length?(ship, coordinate_array)
-
-  if ship.length == coordinate_array.length
-    return true
+    if ship.length == coordinate_array.length
+      return true
+    end
   end
-
-  end #end length method
 
   def validate_ships_consecutive_for_submarine?(ship, coordinate_array)
     total_ord_value_element_1_character_1 = 0
@@ -85,8 +79,6 @@ class Board
       return false
     end
   end
-
-
 
   def validate_ships_consecutive_for_cruiser?(ship, coordinate_array)
     total_ord_value_element_1_character_1 = 0
@@ -112,16 +104,13 @@ class Board
     end
   end
 
-
-
-
   def validate_no_overlapping?(ship,coordinate_array)
     coordinate_array.all? do |coordinate|
       if @cells[coordinate].empty? == true
         return true
       else
         return false
-      end #enum .each
+      end 
     end
   end
 
@@ -132,6 +121,4 @@ class Board
   def fire_upon(coordinate)
     @cells[coordinate].fire_upon
   end
-
-
-end #end class
+end
